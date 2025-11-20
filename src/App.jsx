@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import LoginForm from './components/LoginForm';  // Asegúrate de tener este componente
+import RegisterForm from './components/RegisterForm';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/login">Iniciar sesión</Link></li> {/* Enlace a Login */}
             <li><Link to="/dashboard">Dashboard</Link></li>
+            <li><Link to="/register">Registro</Link></li>
           </ul>
         </nav>
         <hr />
@@ -21,6 +23,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm />} /> {/* Ruta para Login */}
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/register" element={<RegisterForm />} />
         </Routes>
       </div>
     </Router>

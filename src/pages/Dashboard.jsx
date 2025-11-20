@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import PropertyTable from '../components/PropertyTable';
 import PropertyForm from '../components/PropertyForm';
+import PropertyTable from '../components/PropertyTable';
 
 const Dashboard = () => {
   const [properties, setProperties] = useState([]);
 
-  const addProperty = (newProp) => {
-    setProperties([...properties, { ...newProp, id: properties.length + 1 }]);
+  const addProperty = (property) => {
+    setProperties([...properties, property]);
   };
 
   return (
-    <div>
-      <h1>Dashboard de Propiedades</h1>
-      <PropertyForm onSubmit={addProperty} />
+    <div className="dashboard">
+      <h2>Dashboard</h2>
+      <PropertyForm onAddProperty={addProperty} />
       <PropertyTable properties={properties} />
     </div>
   );

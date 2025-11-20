@@ -1,42 +1,43 @@
 import React, { useState } from 'react';
 
-const PropertyForm = ({ onSubmit }) => {
-  const [property, setProperty] = useState({ name: '', owner: '', unit: '' });
-
-  const handleChange = (e) => {
-    setProperty({ ...property, [e.target.name]: e.target.value });
-  };
+const PropertyForm = ({ onAddProperty }) => {
+  const [propertyName, setPropertyName] = useState('');
+  const [propertyAddress, setPropertyAddress] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(property);
+    if (propertyName && propertyAddress) {
+      onAddProperty({ name: propertyName, address: propertyAddress });
+      setPropertyName('');
+      setPropertyAddress('');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        placeholder="Nombre propiedad"
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="text"
-        name="owner"
-        placeholder="Propietario"
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="text"
-        name="unit"
-        placeholder="Unidad"
-        onChange={handleChange}
-        required
-      />
-      <button type="submit">Guardar propiedad</button>
-    </form>
+    <div className="property-form">
+      <h3>Add Property</h3>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="name">Property Name:</label>
+          <input
+            type="text"
+            id="name"
+            value={propertyName}
+            onChange={(e) => setPropertyName(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="address">Property Address:</label>
+          <input
+            type="text"
+            id="address"
+            value={propertyAddress}
+            onChange={(e) => setPropertyAddress(e.target.value)}
+          />
+        </div>
+        <button type="submit">Add Property</button>
+      </form>
+    </div>
   );
 };
 

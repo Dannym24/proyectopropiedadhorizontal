@@ -1,26 +1,27 @@
 import React from 'react';
 
-const PropertyTable = ({ properties }) => (
-  <table border="1" style={{ borderCollapse: 'collapse', width: '100%' }}>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Propietario</th>
-        <th>Unidad</th>
-      </tr>
-    </thead>
-    <tbody>
-      {properties.map((prop) => (
-        <tr key={prop.id}>
-          <td>{prop.id}</td>
-          <td>{prop.name}</td>
-          <td>{prop.owner}</td>
-          <td>{prop.unit}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-);
+const PropertyTable = ({ properties }) => {
+  return (
+    <div className="property-table">
+      <h3>Properties</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          {properties.map((property, index) => (
+            <tr key={index}>
+              <td>{property.name}</td>
+              <td>{property.address}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export default PropertyTable;

@@ -1,35 +1,46 @@
 import React, { useState } from 'react';
 
-const LoginForm = ({ onLogin }) => {
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
-
-  const handleChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
-  };
+const LoginForm = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin(credentials);
+    if (!username || !password) {
+      setError('Username and password are required');
+    } else {
+      // Aquí iría la lógica de autenticación
+      console.log('Logging in:', { username, password });
+      setError('');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        name="email"
-        placeholder="Correo"
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        onChange={handleChange}
-        required
-      />
-      <button type="submit">Ingresar</button>
-    </form>
+    <div className="login-form">
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        {error && <p className="error">{error}</p>}
+        <button type="submit">Login</button>
+      </form>
+    </div>
   );
 };
 

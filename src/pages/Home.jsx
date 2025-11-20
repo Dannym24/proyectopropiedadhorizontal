@@ -1,25 +1,21 @@
 import React from 'react';
-import LoginForm from '../components/LoginForm';
-import RegisterForm from '../components/RegisterForm';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const handleLogin = (data) => {
-    console.log('Login:', data);
-  };
-
-  const handleRegister = (data) => {
-    console.log('Registro:', data);
-  };
-
   return (
     <div>
-      <h1>Propiedad Horizontal</h1>
-      <h2>Login</h2>
-      <LoginForm onLogin={handleLogin} />
-      <h2>Registro</h2>
-      <RegisterForm onSubmit={handleRegister} />
+      <h2>Bienvenido a la Propiedad Horizontal</h2>
+      <p>¡Regístrate o inicia sesión para continuar!</p>
+
+      {/* Enlaces a las páginas de login y registro */}
+      <div>
+        <Link to="/login">Iniciar sesión</Link>
+        <br />
+        <Link to="/register">Registrarse</Link>
+      </div>
     </div>
   );
 };
 
 export default Home;
+

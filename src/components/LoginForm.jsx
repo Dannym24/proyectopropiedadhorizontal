@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
+import { loginUser } from '../api/propertyApi';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!username || !password) {
       setError('Username and password are required');
-    } else {
-      // Aquí iría la lógica de autenticación
-      console.log('Logging in:', { username, password });
+      return;
+    }
+
+    try {
+      const response = await loginUser({ username, password });
+      console.log('Login exitoso:', response);
       setError('');
+      // Redirige al Dashboard después del login exitoso
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message);
     }
   };
 

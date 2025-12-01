@@ -24,5 +24,11 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    proxy: {
+      '/properties': 'http://localhost:5000',  
+      '/register': 'http://localhost:5000',   
+      '/login': 'http://localhost:5000',      
+    },
+  },
 });
-

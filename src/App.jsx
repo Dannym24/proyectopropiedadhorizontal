@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
-import LoginForm from './components/LoginForm';  // Asegúrate de tener este componente
+import LoginForm from './components/LoginForm'; 
 import RegisterForm from './components/RegisterForm';
 
 const App = () => {

@@ -1,43 +1,47 @@
-import React, { useState } from 'react';
+// src/components/PropertyForm.jsx
+import React, { useState } from "react";
+import { addProperty } from "../api/propertyApi";
 
 const PropertyForm = ({ onAddProperty }) => {
-  const [propertyName, setPropertyName] = useState('');
-  const [propertyAddress, setPropertyAddress] = useState('');
+  const [property, setProperty] = useState({ name: "", location: "" });
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (propertyName && propertyAddress) {
-      onAddProperty({ name: propertyName, address: propertyAddress });
-      setPropertyName('');
-      setPropertyAddress('');
+    if (!property.name || !property.location) {
+      setError("Todos los campos son obligatorios");
+      return;
+    }
+    try {
+      const added = await addProperty(property);
+      onAddProperty(added);
+      setProperty({ name: "", location: "" });
+      setError("");
+    } catch (err) {
+      console.error(err);
+      setError("Error al agregar propiedad");
     }
   };
 
   return (
-    <div className="property-form">
-      <h3>Add Property</h3>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Property Name:</label>
-          <input
-            type="text"
-            id="name"
-            value={propertyName}
-            onChange={(e) => setPropertyName(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="address">Property Address:</label>
-          <input
-            type="text"
-            id="address"
-            value={propertyAddress}
-            onChange={(e) => setPropertyAddress(e.target.value)}
-          />
-        </div>
-        <button type="submit">Add Property</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Nombre"
+        value={property.name}
+        onChange={(e) => setProperty({ ...property, name: e.target.value })}
+      />
+      <input
+        type="text"
+        placeholder="Ubicación"
+        value={property.location}
+        onChange={(e) =>
+          setProperty({ ...property, location: e.target.value })
+        }
+      />
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      <button type="submit">Agregar propiedad</button>
+    </form>
   );
 };
 

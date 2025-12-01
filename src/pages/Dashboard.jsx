@@ -1,21 +1,17 @@
 // src/pages/Dashboard.jsx
-import React, { useState, useEffect } from 'react';
-import { getProperties, addProperty } from '../services/propertyService';
+import React, { useState, useEffect } from "react";
+import { getProperties, addProperty } from "../api/propertyApi"; // Importamos los métodos de la API
 
 const Dashboard = () => {
   const [properties, setProperties] = useState([]);
-  const [newProperty, setNewProperty] = useState({ title: '', body: '' });
+  const [newProperty, setNewProperty] = useState({ title: "", body: "" });
 
   useEffect(() => {
+    // Obtener las propiedades al cargar el componente
     const fetchProperties = async () => {
-      try {
-        const data = await getProperties();
-        setProperties(data);
-      } catch (error) {
-        console.error("Error fetching properties:", error);
-      }
+      const propertiesData = await getProperties();
+      setProperties(propertiesData);
     };
-
     fetchProperties();
   }, []);
 
@@ -23,10 +19,10 @@ const Dashboard = () => {
     e.preventDefault();
     try {
       const addedProperty = await addProperty(newProperty);
-      setProperties([...properties, addedProperty]);  // Agrega la nueva propiedad a la lista
-      setNewProperty({ title: '', body: '' });  // Resetea el formulario
+      setProperties([...properties, addedProperty]); // Agregar la nueva propiedad a la lista
+      setNewProperty({ title: "", body: "" }); // Limpiar el formulario
     } catch (error) {
-      console.error("Error adding property:", error);
+      console.error("Error al agregar propiedad:", error);
     }
   };
 
@@ -36,16 +32,16 @@ const Dashboard = () => {
       <form onSubmit={handleAddProperty}>
         <input
           type="text"
-          placeholder="Title"
           value={newProperty.title}
           onChange={(e) => setNewProperty({ ...newProperty, title: e.target.value })}
+          placeholder="Title"
         />
         <textarea
-          placeholder="Body"
           value={newProperty.body}
           onChange={(e) => setNewProperty({ ...newProperty, body: e.target.value })}
+          placeholder="Body"
         />
-        <button type="submit">Add Property</button>
+        <button type="submit">Agregar propiedad</button>
       </form>
       <table>
         <thead>

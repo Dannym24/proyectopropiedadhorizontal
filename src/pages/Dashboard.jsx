@@ -43,7 +43,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container" style={{ padding: "20px" }}>
-      <h2>Dashboard</h2>
+      <h2>Gestión de Propiedades</h2>
 
       <Accordion defaultActiveKey="0">
         {/* Gestión de Propiedades solo admin */}

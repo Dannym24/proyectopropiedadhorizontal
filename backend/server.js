@@ -21,6 +21,55 @@ let cuotas = [
   { id: 1, propietarioId: 1, mes: "Enero", valor: 120000, pagado: false },
   { id: 2, propietarioId: 1, mes: "Febrero", valor: 120000, pagado: true },
   { id: 3, propietarioId: 2, mes: "Enero", valor: 135000, pagado: true },
+  { id: 4, propietarioId: 2, mes: "Febrero", valor: 135000, pagado: false },
+  { id: 5, propietarioId: 3, mes: "Enero", valor: 150000, pagado: true },
+  { id: 6, propietarioId: 3, mes: "Febrero", valor: 150000, pagado: true },
+  { id: 7, propietarioId: 3, mes: "Marzo", valor: 150000, pagado: false },
+  { id: 8, propietarioId: 4, mes: "Enero", valor: 100000, pagado: false },
+  { id: 9, propietarioId: 4, mes: "Febrero", valor: 100000, pagado: true },
+  { id: 10, propietarioId: 4, mes: "Marzo", valor: 100000, pagado: true },
+  { id: 11, propietarioId: 5, mes: "Enero", valor: 130000, pagado: true },
+  { id: 12, propietarioId: 5, mes: "Febrero", valor: 130000, pagado: false },
+  { id: 13, propietarioId: 5, mes: "Marzo", valor: 130000, pagado: true },
+  { id: 14, propietarioId: 6, mes: "Enero", valor: 110000, pagado: false },
+  { id: 15, propietarioId: 6, mes: "Febrero", valor: 110000, pagado: true },
+  { id: 16, propietarioId: 6, mes: "Marzo", valor: 110000, pagado: false },
+  { id: 17, propietarioId: 7, mes: "Enero", valor: 125000, pagado: true },
+  { id: 18, propietarioId: 7, mes: "Febrero", valor: 125000, pagado: false },
+  { id: 19, propietarioId: 7, mes: "Marzo", valor: 125000, pagado: true },
+  { id: 20, propietarioId: 8, mes: "Enero", valor: 140000, pagado: true },
+  { id: 21, propietarioId: 8, mes: "Febrero", valor: 140000, pagado: false },
+  { id: 22, propietarioId: 8, mes: "Marzo", valor: 140000, pagado: true },
+  { id: 23, propietarioId: 9, mes: "Enero", valor: 115000, pagado: true },
+  { id: 24, propietarioId: 9, mes: "Febrero", valor: 115000, pagado: true },
+  { id: 25, propietarioId: 9, mes: "Marzo", valor: 115000, pagado: false },
+  { id: 26, propietarioId: 10, mes: "Enero", valor: 105000, pagado: false },
+  { id: 27, propietarioId: 10, mes: "Febrero", valor: 105000, pagado: true },
+  { id: 28, propietarioId: 10, mes: "Marzo", valor: 105000, pagado: true },
+  { id: 29, propietarioId: 11, mes: "Enero", valor: 120000, pagado: true },
+  { id: 30, propietarioId: 11, mes: "Febrero", valor: 120000, pagado: false },
+  { id: 31, propietarioId: 11, mes: "Marzo", valor: 120000, pagado: true },
+  { id: 32, propietarioId: 12, mes: "Enero", valor: 130000, pagado: false },
+  { id: 33, propietarioId: 12, mes: "Febrero", valor: 130000, pagado: true },
+  { id: 34, propietarioId: 12, mes: "Marzo", valor: 130000, pagado: false },
+  { id: 35, propietarioId: 13, mes: "Enero", valor: 140000, pagado: true },
+  { id: 36, propietarioId: 13, mes: "Febrero", valor: 140000, pagado: false },
+  { id: 37, propietarioId: 13, mes: "Marzo", valor: 140000, pagado: true },
+  { id: 38, propietarioId: 14, mes: "Enero", valor: 150000, pagado: true },
+  { id: 39, propietarioId: 14, mes: "Febrero", valor: 150000, pagado: true },
+  { id: 40, propietarioId: 14, mes: "Marzo", valor: 150000, pagado: false },
+  { id: 41, propietarioId: 15, mes: "Enero", valor: 155000, pagado: false },
+  { id: 42, propietarioId: 15, mes: "Febrero", valor: 155000, pagado: true },
+  { id: 43, propietarioId: 15, mes: "Marzo", valor: 155000, pagado: true },
+  { id: 44, propietarioId: 16, mes: "Enero", valor: 160000, pagado: true },
+  { id: 45, propietarioId: 16, mes: "Febrero", valor: 160000, pagado: false },
+  { id: 46, propietarioId: 16, mes: "Marzo", valor: 160000, pagado: true },
+  { id: 47, propietarioId: 17, mes: "Enero", valor: 170000, pagado: true },
+  { id: 48, propietarioId: 17, mes: "Febrero", valor: 170000, pagado: false },
+  { id: 49, propietarioId: 17, mes: "Marzo", valor: 170000, pagado: true },
+  { id: 50, propietarioId: 18, mes: "Enero", valor: 180000, pagado: false },
+  { id: 51, propietarioId: 21, mes: "Enero", valor: 200000, pagado: false },
+  { id: 52, propietarioId: 21, mes: "Febrero", valor: 200000, pagado: true }
 ];
 
 /* ==========================
@@ -131,7 +180,7 @@ app.get("/cuotas/:propietarioId", (req, res) => {
   console.log("propietarioId recibido:", propietarioId); // Verifica el propietarioId recibido
 
   if (propietarioId) {
-    const cuotasProp = cuotas.filter((c) => c.propietarioId == propietarioId);
+    const cuotasProp = cuotas.filter((c) => Number(c.propietarioId) === Number(propietarioId));
     console.log("Cuotas filtradas:", cuotasProp); // Verifica las cuotas filtradas
     res.json(cuotasProp);
   } else {

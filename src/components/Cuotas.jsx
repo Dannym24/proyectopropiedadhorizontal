@@ -6,16 +6,23 @@ const Cuotas = ({ propietarioId }) => {
 
   useEffect(() => {
     const fetchCuotas = async () => {
+      // Define la URL en función de si hay propietarioId
+      const url = propietarioId
+        ? `http://localhost:5000/cuotas/${propietarioId}`
+        : `http://localhost:5000/cuotas`;
+
+      console.log("Haciendo solicitud a:", url); // Muestra la URL de la solicitud
+
       try {
-        // Si propietarioId es null => admin => llamamos sin parámetro
-        const url = propietarioId
-          ? `http://localhost:5000/cuotas/${propietarioId}`
-          : `http://localhost:5000/cuotas`;
-        
         const res = await fetch(url);
+
+        console.log("Respuesta obtenida:", res); // Muestra la respuesta
+
         if (!res.ok) throw new Error("Error al cargar cuotas");
 
         const data = await res.json();
+        console.log("Datos recibidos:", data); // Muestra los datos recibidos
+
         setCuotas(data);
       } catch (err) {
         console.error("Error al cargar cuotas", err);
@@ -24,7 +31,7 @@ const Cuotas = ({ propietarioId }) => {
     };
 
     fetchCuotas();
-  }, [propietarioId]);
+  }, [propietarioId]); // Dependencia en propietarioId para recargar cuando cambie
 
   if (error) return <p>{error}</p>;
 

@@ -1,26 +1,27 @@
-// src/components/PropertyTable.jsx
 import React from "react";
 
-const PropertyTable = ({ properties }) => {
-  if (properties.length === 0) return <p>No hay propiedades registradas.</p>;
-
+const PropertyTable = ({ properties = [] }) => {
   return (
-    <table>
+    <table border="1" cellPadding="5">
       <thead>
         <tr>
           <th>ID</th>
           <th>Nombre</th>
-          <th>Ubicación</th>
         </tr>
       </thead>
       <tbody>
-        {properties.map((property) => (
-          <tr key={property.id}>
-            <td>{property.id}</td>
-            <td>{property.name}</td>
-            <td>{property.location}</td>
+        {properties.length === 0 ? (
+          <tr>
+            <td colSpan="2">No hay propiedades</td>
           </tr>
-        ))}
+        ) : (
+          properties.map((prop) => (
+            <tr key={prop.id}>
+              <td>{prop.id}</td>
+              <td>{prop.name}</td>
+            </tr>
+          ))
+        )}
       </tbody>
     </table>
   );

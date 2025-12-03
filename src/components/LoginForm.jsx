@@ -1,55 +1,56 @@
-import React, { useState } from 'react';
-import { loginUser } from '../api/propertyApi';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-    if (!username || !password) {
-      setError('Username and password are required');
-      return;
-    }
-
     try {
-      const response = await loginUser({ username, password });
-      console.log('Login exitoso:', response);
-      setError('');
-      // Redirige al Dashboard después del login exitoso
-      navigate('/dashboard');
+      const response = await axios.post("http://localhost:5000/login", {
+        username,
+        password,
+      });
+      console.log("Login Response from Backend:", response.data);
+  
+      // Guardamos los datos del usuario en sessionStorage
+      sessionStorage.setItem("userRole", response.data.role);
+  
+      // Solo guardamos el propietarioId si el rol no es admin
+      if (response.data.role !== "admin" && response.data.propietarioId) {
+        sessionStorage.setItem("propietarioId", response.data.propietarioId);
+      } else {
+        // Si el rol es admin, aseguramos que el propietarioId no se guarde
+        sessionStorage.removeItem("propietarioId");
+      }
+  
+      // Redirige a Dashboard o muestra un mensaje de éxito
+      window.location.href = "/dashboard"; // O usa redireccionamiento de React Router
     } catch (err) {
-      setError(err.message);
+      setError("Usuario o contraseña incorrectos.");
     }
   };
-
+  
   return (
-    <div className="login-form">
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        {error && <p className="error">{error}</p>}
-        <button type="submit">Login</button>
+    <div>
+      <h2>Iniciar sesión</h2>
+      {error && <p>{error}</p>}
+      <form onSubmit={handleLogin}>
+        <input
+          type="text"
+          placeholder="Usuario"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Iniciar sesión</button>
       </form>
     </div>
   );

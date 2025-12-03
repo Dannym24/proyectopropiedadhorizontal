@@ -61,6 +61,7 @@ export const loginUser = async (userData) => {
       body: JSON.stringify(userData),
     });
     const data = await response.json();
+    console.log("Login Response from Backend:", data);
     if (response.ok) return data;
     else throw new Error(data.message || "Usuario o contraseña incorrectos");
   } catch (error) {

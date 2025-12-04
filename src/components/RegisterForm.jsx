@@ -15,8 +15,41 @@ const RegisterForm = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate(); // Inicializamos el hook useNavigate
 
+  // Función para validar los campos antes de enviar
+  const validateForm = () => {
+    if (
+      !nombreCompleto ||
+      !cedula ||
+      !apartamento ||
+      !torre ||
+      !correo ||
+      !username ||
+      !password
+    ) {
+      setError("Todos los campos son obligatorios.");
+      return false;
+    }
+
+    // Validación del formato del correo
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(correo)) {
+      setError("Por favor, ingresa un correo electrónico válido.");
+      return false;
+    }
+
+    // Si todo es válido, restablecemos los errores
+    setError("");
+    return true;
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    // Validamos antes de hacer la solicitud
+    if (!validateForm()) {
+      return; // No continuar si la validación falla
+    }
+
     try {
       const response = await axios.post("http://localhost:5000/register", {
         username,
@@ -29,11 +62,16 @@ const RegisterForm = () => {
         correo,
       });
       console.log("Register Response from Backend:", response.data);
+      
+      // Si el registro fue exitoso, mostramos el mensaje de éxito
       setSuccess("Usuario registrado correctamente.");
       setError("");
+
+      // Redirigimos a la página de inicio de sesión después de un pequeño retraso
+      setTimeout(() => {
+        navigate("/login"); // Redirige a la ruta "/login"
+      }, 2000); // Espera 2 segundos antes de redirigir (opcional para que el usuario vea el mensaje)
       
-      // Redirige a la página de inicio de sesión después de un registro exitoso
-      navigate("/login"); // Esto redirige a la ruta "/login"
     } catch (err) {
       setError("Error al registrar el usuario.");
       setSuccess("");
@@ -112,35 +150,35 @@ const RegisterForm = () => {
 
 // Estilo para los campos de entrada
 const inputStyle = {
-  padding: "12px",
+  padding: "8px",
   fontSize: "14px",
-  border: "2px solid #f39c12",  // Amarillo suave
-  borderRadius: "8px",
+  border: "2px solid #FF7043",  // Naranja
+  borderRadius: "5px",
   width: "100%",
   boxSizing: "border-box",
   marginBottom: "10px",
-  backgroundColor: "#f4f6f8", // Fondo suave claro
+  backgroundColor: "#fff", // Fondo blanco
 };
 
 // Estilo para el selector de rol
 const selectStyle = {
-  padding: "12px",
+  padding: "8px",
   fontSize: "14px",
-  border: "2px solid #f39c12",  // Amarillo suave
-  borderRadius: "8px",
+  border: "2px solid #FF7043",  // Naranja
+  borderRadius: "5px",
   width: "100%",
   boxSizing: "border-box",
   marginBottom: "10px",
-  backgroundColor: "#f4f6f8", // Fondo suave claro
+  backgroundColor: "#fff", // Fondo blanco
 };
 
 // Estilo para el botón
 const buttonStyle = {
-  padding: "12px 20px",
+  padding: "10px",
   fontSize: "16px",
   border: "none",
-  borderRadius: "8px",
-  backgroundColor: "#f39c12",  // Amarillo suave
+  borderRadius: "5px",
+  backgroundColor: "#FF7043",  // Naranja
   color: "#fff",
   cursor: "pointer",
   width: "100%",
@@ -159,19 +197,19 @@ const containerStyle = {
 };
 
 const headingStyle = {
-  color: "#f39c12", // Color de texto naranjita (amarillo suave)
+  color: "#333", // Color de texto oscuro para el título
   fontSize: "24px",
   textAlign: "center",
   marginBottom: "20px",
 };
 
 const errorStyle = {
-  color: "#e74c3c", // Rojo para el mensaje de error
+  color: "#ff4d4d", // Color rojo para el mensaje de error
   fontSize: "14px",
 };
 
 const successStyle = {
-  color: "#2ecc71", // Verde para el mensaje de éxito
+  color: "#4caf50", // Color verde para el mensaje de éxito
   fontSize: "14px",
 };
 
